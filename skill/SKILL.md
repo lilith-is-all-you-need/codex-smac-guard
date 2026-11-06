@@ -95,7 +95,7 @@ stats.jsonl                    # 跨 run 统计
 ## 仓库与同步（本地 ↔ GitHub）
 
 - 本地工作副本：`C:\Users\LLS\Pictures\lilith's card design\科技\codex_harness`（已 `git init`，远端 `origin`）。
-- GitHub：`https://github.com/lilith-is-all-you-need/codex-smac-guard`（私有）。
+- GitHub：`https://github.com/lilith-is-all-you-need/codex-smac-guard`（公开 public）。
 - 仓库结构：`product/`（csg 本体 + 测试）、`skill/SKILL.md`（本文件的副本）、`docs/`（设计、仪表盘说明、截图）、`legacy/`（历史原型）、`_supervisor/`（历史监督脚本）。
 - 本 skill 安装位置：`%USERPROFILE%\.dsh\skills\csg\SKILL.md`（DSH 热加载的就是这一份）。
 - **同步动作**（每次改动后必做）：
