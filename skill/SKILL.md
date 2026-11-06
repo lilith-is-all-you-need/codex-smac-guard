@@ -25,12 +25,21 @@ description: "Codex SMAC Guard：凡是通过 Codex CLI（codex exec）跑任务
 5. **每次拉起必须确认桌面仪表盘**：`csg run` 会自动拉起桌面仪表盘（`csg dash`）。启动后立刻执行 `csg dash status`，输出必须是「仪表盘: 运行中」；不是就执行 `csg dash` 补拉起。补拉起仍失败时，必须在汇报里写明失败原因，并改用 `csg status` / `csg dash once` 作为查看通道。仪表盘是无人值守时唯一不打断会话就能看实时进展的通道，不要跳过这一步。
 6. 结束时必须向用户汇报：run id、尝试次数、SMAC 次数、退出码、`last-message.md` 的结论摘要；失败要给出 `status.json` 里的 `lastError`；同时汇报仪表盘最终状态（运行中 / 已关闭 / 拉起失败）。
 7. **改动必须同步 GitHub（本地工作副本即仓库）**：凡是改 csg 本体（`product/csg.ps1` 等）、仪表盘或本 skill，都要在本地仓库 `C:\Users\LLS\Pictures\lilith's card design\科技\codex_harness` 里 `git add/commit/push` 到 `https://github.com/lilith-is-all-you-need/codex-smac-guard`，并用 `git ls-remote` 确认远端已有该提交。推送前先跑 `pwsh -File product\tests\run-tests.ps1`（应为 6/6）。本 skill 与仓库里的 `skill/SKILL.md` 是同一份内容的两处副本，改完必须两边同时更新。
+8. **语言**：写任务书、续跑指令和 agent 间沟通用**英文**；交付给用户的结果用**中文**（由本层转译），详见下面「语言约定」。
+
+## 语言约定：过程全英文，交付全中文
+
+- **任务书 / Prompt 一律英文**：`csg run "..."` 的文本、`--file task.md` 的内容、给 Codex 的追问与续跑指令、agent 之间（子代理、多会话、异常上报）的沟通，全部用英文。英文任务书在 Codex 侧更稳、歧义更少，也避免中英混排把指令吃掉。
+- **不要为了英文去改 csg 本体**：csg 自己的进度行/报错/`status` 输出是中文，那是工具输出而不是"交流"，保留原样即可，不需要翻译也不需要改代码。
+- **给用户的最终结果一律中文**：run 结束后由**本层（DSH 会话里的 agent）**把英文的 `last-message.md`、`lastError`、日志要点转译成中文再交付；不要把英文原文直接丢给用户。
+- 转译时保留英文专有名词/命令/路径/代号原文（`csg run`、`SMAC`、`status.json` 之类），只翻叙述部分。
+- 例外：任务本身就是要中文产出（中文文案、本地化、中文语音稿），或用户明确要求用中文写任务书。此时按用户要求执行，但必须在汇报里写明"本任务按用户要求用中文写任务书"。
 
 ## 基本用法
 
 ```powershell
-csg run "把当前项目的测试跑绿并修复失败项"
-csg run --file .\task.md --cd C:\work\demo --model gpt-6.1-sol --effort high
+csg run "Make the project test suite pass and fix the failing tests"
+csg run --file .\task.md --cd C:\work\demo --model gpt-6.1-sol --effort high   # task.md 用英文
 csg status
 csg stats
 csg doctor
@@ -119,7 +128,7 @@ stats.jsonl                    # 跨 run 统计
 ## 自检清单
 
 - [ ] `csg doctor` 通过
-- [ ] 任务书/工作目录明确，成功标准可判定
+- [ ] 任务书/工作目录明确，成功标准可判定（任务书为英文，除非用户另有要求）
 - [ ] 长任务已用后台 job + `--deadline`/`--attempt-timeout-minutes`
 - [ ] **`csg dash status` 显示「运行中」**（没拉起就 `csg dash`；仍失败要写明原因）
-- [ ] 结束时已读 `last-message.md` 并汇报 attempts/SMAC/退出码与仪表盘状态
+- [ ] 结束时已读 `last-message.md` 并汇报 attempts/SMAC/退出码与仪表盘状态（英文原文已转成中文交付）
