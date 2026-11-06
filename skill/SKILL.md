@@ -107,6 +107,7 @@ stats.jsonl                    # 跨 run 统计
   git ls-remote origin                       # 确认远端有该提交
   ```
 - 只改本地 skill 不推仓库、或只改仓库副本不更新 `~\.dsh\skills\csg\SKILL.md`，都算漏同步。
+- 本机 git 配了 `http.proxy=http://127.0.0.1:7897`；代理没开时 `git push` 会报 `Failed to connect ... via 127.0.0.1`，此时直连可用，改跑 `git -c http.proxy= -c https.proxy= push`。
 
 ## 安全与边界
 
