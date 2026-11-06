@@ -1,0 +1,13 @@
+{
+  "model": "gpt-6-astra",
+  "effort": "ultra",
+  "attemptsPerRound": 100,
+  "cooldownSeconds": 1800,
+  "deadlineMinutes": 0,
+  "retainRuns": 30,
+  "backoffBaseSeconds": 1,
+  "backoffMaxSeconds": 120,
+  "retryNonCapacity": false,
+  "attemptTimeoutMinutes": 0,
+  "resumeOnSmac": false
+}
